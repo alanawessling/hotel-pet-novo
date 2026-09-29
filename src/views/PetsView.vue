@@ -1,20 +1,57 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://localhost:3000'
 
-const pets = ref([]);
-const tutores = ref([]);
+const pets = ref([])
+const tutores = ref([])
 
+// ve se ta carregando
+const carregando = ref(true)
+
+// guarda o erro
+const erro = ref('')
+
+// pega os dados
 async function carregarDados() {
-  const respostaPets = await fetch(`${API_URL}/pets`);
-  pets.value = await respostaPets.json();
+  try {
+    // começou a carregar
+    carregando.value = true
 
-  const respostaTutores = await fetch(`${API_URL}/tutores`);
-  tutores.value = await respostaTutores.json();
+    // pega os pets
+    const respostaPets = await fetch(`${API_URL}/pets`)
+
+    // vê se deu certo
+    if (!respostaPets.ok) {
+      throw new Error('Erro ao buscar os pets')
+    }
+
+    // pega os dados
+    pets.value = await respostaPets.json()
+
+    // pega os tutores
+    const respostaTutores = await fetch(`${API_URL}/tutores`)
+
+    // ve se deu certo
+    if (!respostaTutores.ok) {
+      throw new Error('Erro ao buscar os tutores')
+    }
+
+    // pega os dados
+    tutores.value = await respostaTutores.json()
+
+  } catch (error) {
+    // se der erro
+    erro.value = 'Não foi possível carregar os dados.'
+
+  } finally {
+    // terminou de carregar
+    carregando.value = false
+  }
 }
 
-onMounted(carregarDados);
+// roda quando abre a página
+onMounted(carregarDados)
 </script>
 
 <template>
