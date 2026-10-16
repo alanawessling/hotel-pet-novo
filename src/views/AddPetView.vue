@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { RouterLink, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 // chamando a minha API para exibir os dados de Tutor
 const API_URL = 'http://localhost:3000';

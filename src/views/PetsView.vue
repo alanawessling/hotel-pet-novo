@@ -23,6 +23,23 @@ function nomeDoTutor(tutorId) {
   return 'Tutor não encontrado';
 }
 
+async function excluirPet(id) {
+  // Solicita a confirmação do usuário.
+  const confirmarExclusao = window.confirm(
+    'Deseja realmente excluir esse pet?',
+  );
+
+  if (confirmarExclusao) {
+    // Envia a requisição para remover o pet pelo ID.
+    await fetch(`${API_URL}/pets/${id}`, {
+      method: 'DELETE',
+    });
+
+    // Busca novamente os dados para atualizar a listagem.
+    await carregarDados();
+  }
+}
+
 onMounted(carregarDados);
 </script>
 
@@ -56,12 +73,13 @@ onMounted(carregarDados);
         <td>{{ pet.especie }}</td>
         <td>{{ nomeDoTutor(pet.tutorId) }}</td>
         <td>
-          <RouterLink
-              :to="`/pets/${pet.id}`"
-            >
-              Visualizar
-            </RouterLink>
-          Excluir
+          <RouterLink :to="`/pets/${pet.id}`"> Visualizar </RouterLink>
+          <button
+            class="btn btn-danger"
+            @click="excluirPet(pet.id)"
+          >
+            Excluir
+          </button>
         </td>
       </tr>
     </tbody>
