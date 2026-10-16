@@ -1,33 +1,43 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import TutorView from '../views/TutorView.vue'
-import AddTutor from '../views/AddTutor.vue'
-import TutorDetailsView from '../views/TutorDetailsView.vue'
-
-const routes = [
-  {
-  path: '/',
-  redirect: '/tutores'
-},
-  {
-    path: '/tutores',
-    name: 'tutores',
-    component: TutorView
-  },
-  {
-    path: '/tutores/novo',
-    name: 'addTutor',
-    component: AddTutor
-  },
-  {
-    path: '/tutores/:id',
-    name: 'tutorDetails',
-    component: TutorDetailsView
-  }
-]
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
-})
+  routes: [
+    {
+      path: '/',
+      redirect: '/pets',
+    },
+    {
+      path: '/pets',
+      name: 'pets',
+      component: () => import('../views/PetsView.vue'),
+    },
+    {
+      path: '/pets/novo',
+      name: 'addPet',
+      component: () => import('../views/AddPetView.vue'),
+    },
+    {
+      path: '/pets/:id',
+      name: 'detalhe-pet',
+      component: () => import('../views/PetDetailsView.vue')
+    },
+    {
+      path: '/tutores/novo',
+      name: 'addTutor',
+      component: () => import('../views/AddTutorView.vue'),
+    },
+    {
+      path: '/tutores/:id',
+      name: 'detalhe-tutores',
+      component: () => import('../views/TutorDetailsView.vue')
+    },
+    {
+      path: '/tutores',
+      name: 'tutores',
+      component: () => import('../views/TutorView.vue'),
+    },
+  ],
+});
 
-export default router
+export default router;
