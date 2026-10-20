@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';    
 
 // chamando minha UseRouter
 
@@ -11,6 +11,7 @@ const API_URL = 'http://localhost:3000';
 // criando variáveis reativas para armazenar os dados do pet e do tutor
 const pet = ref({});
 const tutor = ref({});
+
 
 // função para carregar os dados do pet e do tutor
 async function carregarPet() {
